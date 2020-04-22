@@ -32,14 +32,14 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.pictureBox = new System.Windows.Forms.PictureBox();
             this.groupBoxActions = new System.Windows.Forms.GroupBox();
+            this.txtColorToDettect = new System.Windows.Forms.TextBox();
+            this.btnDettectByColor = new System.Windows.Forms.Button();
+            this.btnReset = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lblFileName = new System.Windows.Forms.Label();
             this.btnOpen = new System.Windows.Forms.Button();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.lblFileName = new System.Windows.Forms.Label();
-            this.btnReset = new System.Windows.Forms.Button();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
-            this.btnDettectByColor = new System.Windows.Forms.Button();
-            this.txtColorToDettect = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
@@ -91,44 +91,12 @@
             this.groupBoxActions.TabStop = false;
             this.groupBoxActions.Text = "Actions";
             // 
-            // groupBox1
+            // txtColorToDettect
             // 
-            this.groupBox1.Controls.Add(this.lblFileName);
-            this.groupBox1.Controls.Add(this.btnOpen);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(776, 52);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Select Image";
-            // 
-            // btnOpen
-            // 
-            this.btnOpen.Location = new System.Drawing.Point(6, 19);
-            this.btnOpen.Name = "btnOpen";
-            this.btnOpen.Size = new System.Drawing.Size(75, 23);
-            this.btnOpen.TabIndex = 0;
-            this.btnOpen.Text = "Open";
-            this.btnOpen.UseVisualStyleBackColor = true;
-            this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
-            // 
-            // lblFileName
-            // 
-            this.lblFileName.AutoSize = true;
-            this.lblFileName.Location = new System.Drawing.Point(87, 24);
-            this.lblFileName.Name = "lblFileName";
-            this.lblFileName.Size = new System.Drawing.Size(0, 13);
-            this.lblFileName.TabIndex = 1;
-            // 
-            // btnReset
-            // 
-            this.btnReset.Location = new System.Drawing.Point(6, 19);
-            this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(75, 23);
-            this.btnReset.TabIndex = 2;
-            this.btnReset.Text = "Reset";
-            this.btnReset.UseVisualStyleBackColor = true;
-            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
+            this.txtColorToDettect.Location = new System.Drawing.Point(171, 21);
+            this.txtColorToDettect.Name = "txtColorToDettect";
+            this.txtColorToDettect.Size = new System.Drawing.Size(22, 20);
+            this.txtColorToDettect.TabIndex = 4;
             // 
             // btnDettectByColor
             // 
@@ -140,12 +108,44 @@
             this.btnDettectByColor.UseVisualStyleBackColor = true;
             this.btnDettectByColor.Click += new System.EventHandler(this.btnDettectByColor_Click);
             // 
-            // txtColorToDettect
+            // btnReset
             // 
-            this.txtColorToDettect.Location = new System.Drawing.Point(171, 21);
-            this.txtColorToDettect.Name = "txtColorToDettect";
-            this.txtColorToDettect.Size = new System.Drawing.Size(22, 20);
-            this.txtColorToDettect.TabIndex = 4;
+            this.btnReset.Location = new System.Drawing.Point(6, 19);
+            this.btnReset.Name = "btnReset";
+            this.btnReset.Size = new System.Drawing.Size(75, 23);
+            this.btnReset.TabIndex = 2;
+            this.btnReset.Text = "Reset";
+            this.btnReset.UseVisualStyleBackColor = true;
+            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.lblFileName);
+            this.groupBox1.Controls.Add(this.btnOpen);
+            this.groupBox1.Location = new System.Drawing.Point(12, 12);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(776, 52);
+            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Select Image";
+            // 
+            // lblFileName
+            // 
+            this.lblFileName.AutoSize = true;
+            this.lblFileName.Location = new System.Drawing.Point(87, 24);
+            this.lblFileName.Name = "lblFileName";
+            this.lblFileName.Size = new System.Drawing.Size(0, 13);
+            this.lblFileName.TabIndex = 1;
+            // 
+            // btnOpen
+            // 
+            this.btnOpen.Location = new System.Drawing.Point(6, 19);
+            this.btnOpen.Name = "btnOpen";
+            this.btnOpen.Size = new System.Drawing.Size(75, 23);
+            this.btnOpen.TabIndex = 0;
+            this.btnOpen.Text = "Open";
+            this.btnOpen.UseVisualStyleBackColor = true;
+            this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
             // 
             // frmPrincipal
             // 
