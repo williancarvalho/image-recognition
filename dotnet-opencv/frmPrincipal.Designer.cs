@@ -32,18 +32,21 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.pictureBox = new System.Windows.Forms.PictureBox();
             this.groupBoxActions = new System.Windows.Forms.GroupBox();
-            this.txtColorToDettect = new System.Windows.Forms.TextBox();
-            this.btnDettectByColor = new System.Windows.Forms.Button();
+            this.trackBarPrecision = new System.Windows.Forms.TrackBar();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.screenColorPicker = new Cyotek.Windows.Forms.ScreenColorPicker();
             this.btnReset = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lblFileName = new System.Windows.Forms.Label();
             this.btnOpen = new System.Windows.Forms.Button();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.colorDialog = new System.Windows.Forms.ColorDialog();
+            this.lblPrecision = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.groupBoxActions.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarPrecision)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -61,9 +64,9 @@
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.pictureBox);
-            this.groupBox3.Location = new System.Drawing.Point(13, 127);
+            this.groupBox3.Location = new System.Drawing.Point(13, 168);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(775, 454);
+            this.groupBox3.Size = new System.Drawing.Size(775, 413);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Image";
@@ -73,46 +76,73 @@
             this.pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox.Location = new System.Drawing.Point(3, 16);
             this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(769, 435);
+            this.pictureBox.Size = new System.Drawing.Size(769, 394);
             this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox.TabIndex = 0;
             this.pictureBox.TabStop = false;
             // 
             // groupBoxActions
             // 
-            this.groupBoxActions.Controls.Add(this.txtColorToDettect);
-            this.groupBoxActions.Controls.Add(this.btnDettectByColor);
+            this.groupBoxActions.Controls.Add(this.lblPrecision);
+            this.groupBoxActions.Controls.Add(this.trackBarPrecision);
+            this.groupBoxActions.Controls.Add(this.label2);
+            this.groupBoxActions.Controls.Add(this.label1);
+            this.groupBoxActions.Controls.Add(this.screenColorPicker);
             this.groupBoxActions.Controls.Add(this.btnReset);
             this.groupBoxActions.Enabled = false;
             this.groupBoxActions.Location = new System.Drawing.Point(12, 70);
             this.groupBoxActions.Name = "groupBoxActions";
-            this.groupBoxActions.Size = new System.Drawing.Size(776, 51);
+            this.groupBoxActions.Size = new System.Drawing.Size(776, 92);
             this.groupBoxActions.TabIndex = 1;
             this.groupBoxActions.TabStop = false;
             this.groupBoxActions.Text = "Actions";
             // 
-            // txtColorToDettect
+            // trackBarPrecision
             // 
-            this.txtColorToDettect.Location = new System.Drawing.Point(171, 21);
-            this.txtColorToDettect.Name = "txtColorToDettect";
-            this.txtColorToDettect.Size = new System.Drawing.Size(22, 20);
-            this.txtColorToDettect.TabIndex = 4;
+            this.trackBarPrecision.LargeChange = 15;
+            this.trackBarPrecision.Location = new System.Drawing.Point(258, 30);
+            this.trackBarPrecision.Maximum = 255;
+            this.trackBarPrecision.Name = "trackBarPrecision";
+            this.trackBarPrecision.Size = new System.Drawing.Size(192, 45);
+            this.trackBarPrecision.SmallChange = 5;
+            this.trackBarPrecision.TabIndex = 5;
+            this.trackBarPrecision.TickFrequency = 5;
+            this.trackBarPrecision.TickStyle = System.Windows.Forms.TickStyle.Both;
+            this.trackBarPrecision.Value = 1;
+            this.trackBarPrecision.Scroll += new System.EventHandler(this.trackBarPrecision_Scroll);
             // 
-            // btnDettectByColor
+            // label2
             // 
-            this.btnDettectByColor.Location = new System.Drawing.Point(90, 19);
-            this.btnDettectByColor.Name = "btnDettectByColor";
-            this.btnDettectByColor.Size = new System.Drawing.Size(75, 23);
-            this.btnDettectByColor.TabIndex = 3;
-            this.btnDettectByColor.Text = "Dettect";
-            this.btnDettectByColor.UseVisualStyleBackColor = true;
-            this.btnDettectByColor.Click += new System.EventHandler(this.btnDettectByColor_Click);
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(201, 46);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(51, 13);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Precisão:";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 46);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(84, 13);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Selecione a cor:";
+            // 
+            // screenColorPicker
+            // 
+            this.screenColorPicker.Color = System.Drawing.Color.Empty;
+            this.screenColorPicker.Location = new System.Drawing.Point(96, 19);
+            this.screenColorPicker.Name = "screenColorPicker";
+            this.screenColorPicker.Size = new System.Drawing.Size(75, 67);
+            this.screenColorPicker.Text = "Clique e arraste";
+            this.screenColorPicker.Zoom = 24;
             // 
             // btnReset
             // 
-            this.btnReset.Location = new System.Drawing.Point(6, 19);
+            this.btnReset.Location = new System.Drawing.Point(695, 39);
             this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(75, 23);
+            this.btnReset.Size = new System.Drawing.Size(75, 26);
             this.btnReset.TabIndex = 2;
             this.btnReset.Text = "Reset";
             this.btnReset.UseVisualStyleBackColor = true;
@@ -147,10 +177,14 @@
             this.btnOpen.UseVisualStyleBackColor = true;
             this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
             // 
-            // colorDialog
+            // lblPrecision
             // 
-            this.colorDialog.AnyColor = true;
-            this.colorDialog.FullOpen = true;
+            this.lblPrecision.AutoSize = true;
+            this.lblPrecision.Location = new System.Drawing.Point(457, 45);
+            this.lblPrecision.Name = "lblPrecision";
+            this.lblPrecision.Size = new System.Drawing.Size(21, 13);
+            this.lblPrecision.TabIndex = 6;
+            this.lblPrecision.Text = "0%";
             // 
             // frmPrincipal
             // 
@@ -167,6 +201,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.groupBoxActions.ResumeLayout(false);
             this.groupBoxActions.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarPrecision)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -184,9 +219,11 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.Label lblFileName;
         private System.Windows.Forms.Button btnReset;
-        private System.Windows.Forms.TextBox txtColorToDettect;
-        private System.Windows.Forms.Button btnDettectByColor;
-        private System.Windows.Forms.ColorDialog colorDialog;
+        private Cyotek.Windows.Forms.ScreenColorPicker screenColorPicker;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TrackBar trackBarPrecision;
+        private System.Windows.Forms.Label lblPrecision;
     }
 }
 
