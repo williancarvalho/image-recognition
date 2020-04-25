@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using PocImageWork.Extensions;
 
 namespace DotnetOpenCV
 {
@@ -33,18 +35,12 @@ namespace DotnetOpenCV
 
                     originalImage = ms.ToArray();
 
-                    ResetImage();
+                    pictureBox.SetImage(originalImage);
                 }
 
                 lblFileName.Text = openFileDialog.FileName;
                 groupBoxActions.Enabled = true;
             }
-        }
-
-        private void ResetImage()
-        {
-            pictureBox.Image = new Bitmap(new MemoryStream(originalImage));
-            pictureBox.Refresh();
         }
 
         private void frmPrincipal_Load(object sender, EventArgs e)
@@ -55,7 +51,7 @@ namespace DotnetOpenCV
         private void btnReset_Click(object sender, EventArgs e)
         {
             trackBarPrecision.Value = trackBarPrecision.Minimum;
-            ResetImage();
+            pictureBox.SetImage(originalImage);
         }
 
         private void IdentifyBorders()
@@ -67,24 +63,34 @@ namespace DotnetOpenCV
 
             // normalize image
             var hsv_img = img.CvtColor(OpenCvSharp.ColorConversionCodes.BGR2HSV);
+
+            pictureBox2.SetImage(hsv_img.ToBytes());
+
             var pixel_low = OpenCvSharp.InputArray.Create(new byte[] { (byte)pixelHue, (byte)pixelSaturation, (byte)(255 - precision) });
             var pixel_high = OpenCvSharp.InputArray.Create(new byte[] { (byte)pixelHue, (byte)precision, (byte)pixelValue });
             var curr_mask = hsv_img.InRange(pixel_low, pixel_high);
             var hsv_img_masked = hsv_img.SetTo(OpenCvSharp.InputArray.Create(new byte[] { 255, 255, 255 }), curr_mask);
             var img_rgb = hsv_img_masked.CvtColor(OpenCvSharp.ColorConversionCodes.HSV2RGB);
 
+            pictureBox3.SetImage(img_rgb.ToBytes());
+
             // convert to gray scale to get countours
             var img_gray = img_rgb.CvtColor(OpenCvSharp.ColorConversionCodes.RGB2GRAY);
             var threshold = img_gray.Threshold(90, 255, 0);
             threshold.FindContours(out OpenCvSharp.Point[][] contours, out OpenCvSharp.HierarchyIndex[] hierarchy, OpenCvSharp.RetrievalModes.Tree, OpenCvSharp.ContourApproximationModes.ApproxSimple);
 
+            pictureBox4.SetImage(img_gray.ToBytes());
+            pictureBox5.SetImage(threshold.ToBytes());
+
             // draw countours
             img.DrawContours(contours, -1, new OpenCvSharp.Scalar(0, 0, 255), 3);
-
-            var output = new Bitmap(new MemoryStream(img_rgb.ToBytes()));
-            pictureBox.Image = output;
-            pictureBox.Refresh();
+            
+            pictureBox.SetImage(img_rgb.ToBytes());
         }
+
+
+        
+
 
         public static void ColorToHSV(Color color, out double hue, out double saturation, out double value)
         {
@@ -100,6 +106,31 @@ namespace DotnetOpenCV
         {
             lblPrecision.Text = $"{(int)((decimal)trackBarPrecision.Value / (decimal)trackBarPrecision.Maximum * 100)}%";
             IdentifyBorders();
+        }
+
+        private void btn_analise4_Click(object sender, EventArgs e)
+        {
+            /*
+              var img_gray = OpenCvSharp.Mat.FromImageData(pictureBox4.ImageToByte());
+
+              ColorToHSV(screenColorPicker.Color, out double pixelHue, out double pixelSaturation, out double pixelValue);
+              var precision = trackBarPrecision.Value;
+
+              var pixel_low = OpenCvSharp.InputArray.Create(new byte[] { (byte)pixelHue, (byte)pixelSaturation, (byte)(255 - precision) });
+              var pixel_high = OpenCvSharp.InputArray.Create(new byte[] { (byte)pixelHue, (byte)precision, (byte)pixelValue });
+              var curr_mask = img_gray.InRange(pixel_low, pixel_high);
+              var hsv_img_masked = img_gray.SetTo(OpenCvSharp.InputArray.Create(new byte[] { 255, 255, 255 }), curr_mask);
+
+              var threshold = img_gray.Threshold(90, 255, 0);
+              threshold.FindContours(out OpenCvSharp.Point[][] contours, out OpenCvSharp.HierarchyIndex[] hierarchy, OpenCvSharp.RetrievalModes.Tree, OpenCvSharp.ContourApproximationModes.ApproxSimple);
+
+              pictureBox1.SetImage(img_gray.ToBytes());
+
+              // draw countours
+              img_gray.DrawContours(contours, -1, new OpenCvSharp.Scalar(0, 0, 255), 3);
+              */
+            pictureBox4.Image.Save(@"c:\temp\folhas\gray_" + Path.GetFileName(lblFileName.Text) , ImageFormat.Jpeg);
+
         }
     }
 }
