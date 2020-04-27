@@ -43,13 +43,17 @@ namespace DotnetOpenCV
 
         private void ResetImage()
         {
-            pictureBox.Image = new Bitmap(new MemoryStream(originalImage));
-            pictureBox.Refresh();
+            pictureBoxOriginal.Image = new Bitmap(new MemoryStream(originalImage));
+            pictureBoxOriginal.Refresh();
+
+            pictureBoxChanged.Image = new Bitmap(new MemoryStream(originalImage));
+            pictureBoxChanged.Refresh();
+
         }
 
         private void frmPrincipal_Load(object sender, EventArgs e)
         {
-            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            FormBorderStyle = FormBorderStyle.FixedSingle;
         }
 
         private void btnReset_Click(object sender, EventArgs e)
@@ -63,27 +67,23 @@ namespace DotnetOpenCV
             var img = OpenCvSharp.Mat.FromImageData(originalImage);
 
             ColorToHSV(screenColorPicker.Color, out double pixelHue, out double pixelSaturation, out double pixelValue);
-            var precision = trackBarPrecision.Value;
 
             // normalize image
             var hsv_img = img.CvtColor(OpenCvSharp.ColorConversionCodes.BGR2HSV);
-            var pixel_low = OpenCvSharp.InputArray.Create(new byte[] { (byte)pixelHue, (byte)pixelSaturation, (byte)(255 - precision) });
-            var pixel_high = OpenCvSharp.InputArray.Create(new byte[] { (byte)pixelHue, (byte)precision, (byte)pixelValue });
+
+            var precision = (byte)trackBarPrecision.Value;
+            
+            var pixel_low = new OpenCvSharp.Scalar(pixelHue - (precision * (179.0 / 100.0 / 2.0)), pixelSaturation - (precision * (255.0 / 100.0 / 2.0)), pixelValue - (precision * (255.0 / 100.0 / 2.0)));
+            var pixel_high = new OpenCvSharp.Scalar(pixelHue + (precision * (179.0 / 100.0 / 2.0)), pixelSaturation + (precision * (255.0 / 100.0 / 2.0)), pixelValue + (precision * (255.0 / 100.0 / 2.0)));
+
             var curr_mask = hsv_img.InRange(pixel_low, pixel_high);
-            var hsv_img_masked = hsv_img.SetTo(OpenCvSharp.InputArray.Create(new byte[] { 255, 255, 255 }), curr_mask);
-            var img_rgb = hsv_img_masked.CvtColor(OpenCvSharp.ColorConversionCodes.HSV2RGB);
 
-            // convert to gray scale to get countours
-            var img_gray = img_rgb.CvtColor(OpenCvSharp.ColorConversionCodes.RGB2GRAY);
-            var threshold = img_gray.Threshold(90, 255, 0);
-            threshold.FindContours(out OpenCvSharp.Point[][] contours, out OpenCvSharp.HierarchyIndex[] hierarchy, OpenCvSharp.RetrievalModes.Tree, OpenCvSharp.ContourApproximationModes.ApproxSimple);
-
-            // draw countours
-            img.DrawContours(contours, -1, new OpenCvSharp.Scalar(0, 0, 255), 3);
+            var hsv_img_masked = hsv_img.SetTo(OpenCvSharp.InputArray.Create(new byte[] { 70, 255, 255 }), curr_mask);
+            var img_rgb = hsv_img_masked.CvtColor(OpenCvSharp.ColorConversionCodes.HSV2RGB);            
 
             var output = new Bitmap(new MemoryStream(img_rgb.ToBytes()));
-            pictureBox.Image = output;
-            pictureBox.Refresh();
+            pictureBoxChanged.Image = output;
+            pictureBoxChanged.Refresh();
         }
 
         public static void ColorToHSV(Color color, out double hue, out double saturation, out double value)
@@ -98,7 +98,11 @@ namespace DotnetOpenCV
 
         private void trackBarPrecision_Scroll(object sender, EventArgs e)
         {
-            lblPrecision.Text = $"{(int)((decimal)trackBarPrecision.Value / (decimal)trackBarPrecision.Maximum * 100)}%";
+            lblPrecision.Text = $"{(int)((decimal)trackBarPrecision.Value / (decimal)trackBarPrecision.Maximum * 100)}%";            
+        }
+
+        private void btnIdentify_Click(object sender, EventArgs e)
+        {
             IdentifyBorders();
         }
     }

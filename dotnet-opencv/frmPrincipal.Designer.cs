@@ -30,8 +30,9 @@
         {
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.pictureBox = new System.Windows.Forms.PictureBox();
+            this.pictureBoxOriginal = new System.Windows.Forms.PictureBox();
             this.groupBoxActions = new System.Windows.Forms.GroupBox();
+            this.lblPrecision = new System.Windows.Forms.Label();
             this.trackBarPrecision = new System.Windows.Forms.TrackBar();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -41,13 +42,15 @@
             this.lblFileName = new System.Windows.Forms.Label();
             this.btnOpen = new System.Windows.Forms.Button();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.lblPrecision = new System.Windows.Forms.Label();
+            this.btnIdentify = new System.Windows.Forms.Button();
+            this.pictureBoxChanged = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxOriginal)).BeginInit();
             this.groupBoxActions.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPrecision)).BeginInit();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxChanged)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -63,7 +66,8 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.pictureBox);
+            this.groupBox3.Controls.Add(this.pictureBoxChanged);
+            this.groupBox3.Controls.Add(this.pictureBoxOriginal);
             this.groupBox3.Location = new System.Drawing.Point(13, 168);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(775, 413);
@@ -71,18 +75,18 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Image";
             // 
-            // pictureBox
+            // pictureBoxOriginal
             // 
-            this.pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox.Location = new System.Drawing.Point(3, 16);
-            this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(769, 394);
-            this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox.TabIndex = 0;
-            this.pictureBox.TabStop = false;
+            this.pictureBoxOriginal.Location = new System.Drawing.Point(3, 16);
+            this.pictureBoxOriginal.Name = "pictureBoxOriginal";
+            this.pictureBoxOriginal.Size = new System.Drawing.Size(379, 394);
+            this.pictureBoxOriginal.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBoxOriginal.TabIndex = 0;
+            this.pictureBoxOriginal.TabStop = false;
             // 
             // groupBoxActions
             // 
+            this.groupBoxActions.Controls.Add(this.btnIdentify);
             this.groupBoxActions.Controls.Add(this.lblPrecision);
             this.groupBoxActions.Controls.Add(this.trackBarPrecision);
             this.groupBoxActions.Controls.Add(this.label2);
@@ -97,11 +101,20 @@
             this.groupBoxActions.TabStop = false;
             this.groupBoxActions.Text = "Actions";
             // 
+            // lblPrecision
+            // 
+            this.lblPrecision.AutoSize = true;
+            this.lblPrecision.Location = new System.Drawing.Point(457, 45);
+            this.lblPrecision.Name = "lblPrecision";
+            this.lblPrecision.Size = new System.Drawing.Size(21, 13);
+            this.lblPrecision.TabIndex = 6;
+            this.lblPrecision.Text = "0%";
+            // 
             // trackBarPrecision
             // 
-            this.trackBarPrecision.LargeChange = 15;
+            this.trackBarPrecision.LargeChange = 10;
             this.trackBarPrecision.Location = new System.Drawing.Point(258, 30);
-            this.trackBarPrecision.Maximum = 255;
+            this.trackBarPrecision.Maximum = 100;
             this.trackBarPrecision.Name = "trackBarPrecision";
             this.trackBarPrecision.Size = new System.Drawing.Size(192, 45);
             this.trackBarPrecision.SmallChange = 5;
@@ -177,14 +190,24 @@
             this.btnOpen.UseVisualStyleBackColor = true;
             this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
             // 
-            // lblPrecision
+            // btnIdentify
             // 
-            this.lblPrecision.AutoSize = true;
-            this.lblPrecision.Location = new System.Drawing.Point(457, 45);
-            this.lblPrecision.Name = "lblPrecision";
-            this.lblPrecision.Size = new System.Drawing.Size(21, 13);
-            this.lblPrecision.TabIndex = 6;
-            this.lblPrecision.Text = "0%";
+            this.btnIdentify.Location = new System.Drawing.Point(614, 39);
+            this.btnIdentify.Name = "btnIdentify";
+            this.btnIdentify.Size = new System.Drawing.Size(75, 26);
+            this.btnIdentify.TabIndex = 7;
+            this.btnIdentify.Text = "Identify";
+            this.btnIdentify.UseVisualStyleBackColor = true;
+            this.btnIdentify.Click += new System.EventHandler(this.btnIdentify_Click);
+            // 
+            // pictureBoxChanged
+            // 
+            this.pictureBoxChanged.Location = new System.Drawing.Point(388, 16);
+            this.pictureBoxChanged.Name = "pictureBoxChanged";
+            this.pictureBoxChanged.Size = new System.Drawing.Size(381, 394);
+            this.pictureBoxChanged.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBoxChanged.TabIndex = 1;
+            this.pictureBoxChanged.TabStop = false;
             // 
             // frmPrincipal
             // 
@@ -198,12 +221,13 @@
             this.Load += new System.EventHandler(this.frmPrincipal_Load);
             this.panel1.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxOriginal)).EndInit();
             this.groupBoxActions.ResumeLayout(false);
             this.groupBoxActions.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPrecision)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxChanged)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -212,7 +236,7 @@
 
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.PictureBox pictureBox;
+        private System.Windows.Forms.PictureBox pictureBoxOriginal;
         private System.Windows.Forms.GroupBox groupBoxActions;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button btnOpen;
@@ -224,6 +248,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TrackBar trackBarPrecision;
         private System.Windows.Forms.Label lblPrecision;
+        private System.Windows.Forms.Button btnIdentify;
+        private System.Windows.Forms.PictureBox pictureBoxChanged;
     }
 }
 
